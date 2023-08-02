@@ -1,0 +1,81 @@
+{% extends "_base.html" %}
+
+{% block page_title %} Calculation page {% endblock page_title %}
+
+{% block content %}
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-9">
+
+                        <div class="card shadow my-3 p-5">
+                            <h1 class="big mt-2"> {{ person.name }}  نام متوفی </h1>
+                            <p class="small text-muted mt-2"> {{ person.author }}  نویسنده  </p>
+                            {% if person.gender == 'm' %}
+                                <p class="mt-2"> متوفی مرد بوده  </p> <br>
+                            {% elif person.gender == 'f' %}
+                                <p class="mt-2"> متوفی زن بوده </p>
+                            {% endif %}
+                            {% if person.has_father == 'Y' %}
+                                <p>پدر متوفی در قید حیات است</p>
+                            {% endif %}
+                            {% if person.has_mother == 'Y' %}
+                                <p>مادر متوفی در قید حیات است</p>
+                            {% endif %}
+                            {% if person.singularity == 'hasW' %}
+                                <p>همسر متوفی در قید حیات است</p>
+                            {% elif person.singularity == 'hasH' %}
+                                <p>شوهر متوفی در قید حیات است</p>
+                            {% else %}
+                                <p>متوفی مجرد بوده</p>
+                            {% endif %} <br>
+
+                            <p class=" mt-2"> {{ person.number_of_sons }} :تعداد پسران </p>
+                            <p class=" mt-2"> {{ person.number_of_daughters }} :تعداد دختران </p> <br>
+
+{#                            {% if person.has_father == 'Y' %}#}
+                                <p>{{ person.father_share }} :سهم الارث پدر </p>
+{#                            {% endif %}#}
+                            {% if person.has_mother == 'Y' %}
+                                <p>{{ person.mother_share }} :سهم الارث مادر</p>
+                            {% endif %}
+                            {% if person.singularity != 'sing' %}
+                                <p>{{ person.hamsar_share }} :سهم الارث همسر </p>
+                            {% endif %}
+
+                            {% if person.number_of_sons != 0 %}
+                                <p>{{ person.son_share }} :سهم الارث پسر </p>
+                            {% endif %}
+                            {% if person.number_of_daughters != 0 %}
+                                <p>{{ person.daughter_share }} :سهم الارث دختر </p>
+                            {% endif %}
+
+                            {% if person.number_of_common_brothers != 0 %}
+                                <p>{{ person.brother_share }} :سهم الارث برادر </p>
+                            {% endif %}
+                            {% if person.number_of_common_sisters != 0 %}
+                                <p>{{ person.sister_share }} :سهم الارث خواهر </p>
+                            {% endif %}
+                            <a href="{% url 'person_update' person.id %}" class="btn btn-sm btn-danger" style="width: max-content;height: min-content">edit</a>
+
+                        </div>
+            </div>
+
+
+            <div class="col-3">
+                <div class="card my-4">
+                    <h5 class="card-header">About</h5>
+                    <div class="card-body">
+                        <p class="card-text">این سایت توسط امین ابطحی دانشجوی رشته کامپیوتر دانشگاه صنعتی شاهرود طراحی شده است</p>
+                        <a href="#"
+                           class="btn btn-sm btn-danger">
+                            More...
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}

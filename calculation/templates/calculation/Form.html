@@ -1,0 +1,94 @@
+{% extends '_base.html' %}
+
+{% block page_title %} {{ page_name }} Page {% endblock page_title %}
+
+{% block content %}
+
+    this is the content
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-9">
+                <div class="card shadow-sm my-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <h6 class="card-subtitle mb-2 text-muted small py-2">2 Sep 2021</h6>
+                        <p class="card-text py-3">
+                            وضعیت وراثت را مشخص کنید
+                        </p>
+                        {#                    <div class="btn btn-sm btn-success">Read More</div>#}
+                        <p class="card-text py-3">
+{#                            <label for="authName">نام خود را وارد کنید</label>#}
+{#                            <input type="text" id="authName" name="authName" value=><br><br>#}
+                        </p>
+                        <form method="POST" action="">
+                            {% csrf_token %}
+                            {{ form.as_ul }}
+
+{#                            <div class="container mt-9">#}
+{#                                <div class="col-9" id="gender">#}
+{#                                    <label><input type="radio" name="gender" value="single" checked>مجرد</label>#}
+{#                                    <label><input type="radio" name="gender" value="hasW" checked>دارای زن</label>#}
+{#                                    <label><input type="radio" name="gender" value="HasH" checked>دارای شوهر</label>#}
+{#                                    <br><br>#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{##}
+{#                            <h4><span class="w-full"> --------وراث طبقه اول---------- </span></h4><br>#}
+{##}
+{#                            <label for="numberOfSons">تعداد فرزندان پسر</label>#}
+{#                            <input type="text" id="numberOfSons" name="numberOfSons" value=0><br><br>#}
+{#                            <label for="numberOfDaughters">تعداد فرزندان دختر</label>#}
+{#                            <input type="text" id="numberOfDaughters" name="numberOfDaughters" value=0><br><br>#}
+                            {#                            <input type="submit" value="Submit">#}
+{##}
+{#                            <div class="container mt-9">#}
+{#                                <div class="col-9">#}
+{#                                    <label for="hasFather">پدر در قید حیات است</label>#}
+{#                                    <input type="checkbox" id="hasFather" name="hasFather">#}
+{#                                    <label for="hasMother">مادر در قید حیات است</label>#}
+{#                                    <input type="checkbox" id="hasMother" name="hasMother"><br><br>#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                            <h4><span class="w-full"> --------وراث طبقه دوم---------- </span></h4><br>#}
+{##}
+{##}
+{#                            <label for="numberOfSons">برادر والدین مشترک</label>#}
+{#                            <input type="text" id="numberOfSons" name="numberOfSons" value=0><br><br>#}
+{#                            <label for="numberOfDaughters">خواهر والدین مشترک</label>#}
+{#                            <input type="text" id="numberOfDaughters" name="numberOfDaughters" value=0><br><br>#}
+{#                            <label for="numberOfSons">برادر از طرف پدر</label>#}
+{#                            <input type="text" id="numberOfSons" name="numberOfSons" value=0><br><br>#}
+{#                            <label for="numberOfDaughters">خواهر از طرف پدر</label>#}
+{#                            <input type="text" id="numberOfDaughters" name="numberOfDaughters" value=0><br><br>#}
+{#                            <label for="numberOfSons">برادر از طرف مادر</label>#}
+{#                            <input type="text" id="numberOfSons" name="numberOfSons" value=0><br><br>#}
+{#                            <label for="numberOfDaughters">خواهر از طرف مادر</label>#}
+{#                            <input type="text" id="numberOfDaughters" name="numberOfDaughters" value=0><br><br>#}
+
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+
+                <div class="card my-4">
+                    <h5 class="card-header">About</h5>
+                    <div class="card-body">
+                        <p class="card-text">این سایت توسط امین ابطحی دانشجوی رشته کامپیوتر دانشگاه صنعتی شاهرود طراحی شده است</p>
+                        <a href="#"
+                           class="btn btn-sm btn-danger">
+                            More...
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

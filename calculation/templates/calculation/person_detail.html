@@ -1,0 +1,67 @@
+{% extends "_base.html" %}
+
+{% block page_title %} {{ paage_name }} page{% endblock page_title %}
+
+{% block content %}
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-9">
+                <div class="card shadow my-3 p-5">
+                    <h1> {{ person.name }} :متوفی </h1>
+                    <p class="small text-muted mt-2"> {{ person.author }} :نویسنده</p>
+                    {% if person.gender == 'm' %}
+                        <p class="mt-2"> متوفی مرد بوده  </p>
+                    {% elif person.gender == 'f' %}
+                        <p class="mt-2"> متوفی زن بوده </p>
+                    {% endif %}
+                    {% if person.has_father == 'Y' %}
+                        <p>پدر متوفی در قید حیات است</p>
+                    {% endif %}
+                    {% if person.has_mother == 'Y' %}
+                        <p>مادر متوفی در قید حیات است</p>
+                    {% endif %}
+                    {% if person.singularity == 'hasW' %}
+                        <p>همسر متوفی در قید حیات است</p>
+                    {% elif person.singularity == 'hasH' %}
+                        <p>شوهر متوفی در قید حیات است</p>
+                    {% else %}
+                        <p>متوفی مجرد بوده</p>
+                    {% endif %}
+                    <p class="mt-2"> {{ person.number_of_sons }} :تعداد فرزندان پسر </p>
+                    <p class="mt-2"> {{ person.number_of_daughters }} :تعداد فرزندان دختر </p>
+                    <p class="mt-2"> {{ person.number_of_common_brothers }} :تعداد برادران مشترک </p>
+                    <p class="mt-2"> {{ person.number_of_common_sisters }} :تعداد خواهران مشترک </p>
+                    <p class="mt-2"> {{ person.number_of_brothers_from_father }} :تعداد برادران ابوی </p>
+                    <p class="mt-2"> {{ person.number_of_sister_from_father }} :تعداد خواهران ابوی </p>
+                    <p class="mt-2"> {{ person.number_of_brothers_from_mother }} :تعداد برادران مادری </p>
+                    <p class="mt-2"> {{ person.number_of_sisters_from_mother }} :تعداد خواهران مادری </p>
+                    <a href="{% url 'calcPage' person.id %}" class="btn btn-sm btn-primary" style="width: max-content;height: min-content">محاسبه</a>
+
+
+
+{#                    <p class="mt-2">has mother: {{ person.has_mother }}</p>#}
+{#                    <p class="mt-2">has father: {{ person.has_father }}</p>#}
+{#                    <p class="mt-2">single: {{ person.singularity }}</p>#}
+                    <a href="{% url 'person_update' person.id %}" class="btn btn-sm btn-danger" style="width: max-content;height: min-content">edit</a>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card my-4">
+                    <h5 class="card-header">About</h5>
+                    <div class="card-body">
+                        <p class="card-text">این سایت توسط امین ابطحی دانشجوی رشته کامپیوتر دانشگاه صنعتی شاهرود طراحی شده است</p>
+                        <a href="#"
+                           class="btn btn-sm btn-danger">
+                            More...
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock content %}
