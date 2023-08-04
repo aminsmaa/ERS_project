@@ -56,6 +56,33 @@
                             {% if person.number_of_common_sisters != 0 %}
                                 <p>{{ person.sister_share }} :سهم الارث خواهر </p>
                             {% endif %}
+
+                            {% if person.number_of_brothers_from_father != 0 %}
+                                <p>{{ person.brother_from_father_share }} :سهم الارث برادر ابی </p>
+                            {% endif %}
+                            {% if person.number_of_sister_from_father != 0 %}
+                                <p>{{ person.sister_from_father_share }} :سهم الارث خواهر ابی </p>
+                            {% endif %}
+
+                            {% if person.number_of_brothers_from_mother != 0 %}
+                                <p>{{ person.brother_from_mother_share }} :سهم الارث برادر امی </p>
+                            {% endif %}
+                            {% if person.number_of_sisters_from_mother != 0 %}
+                                <p>{{ person.sister_from_mother_share }} :سهم الارث خواهر امی </p>
+                            {% endif %}
+
+                            {% if person.has_grandFather_of_father == 'Y' %}
+                                <p>{{ person.father_of_father_share }} :سهم الارث پدربزرگ پدری </p>
+                            {% endif %}
+                            {% if person.has_grandMother_of_father == 'Y' %}
+                                <p>{{ person.mother_of_father_share }} :سهم الارث مادربزرگ پدری </p>
+                            {% endif %}
+                            {% if person.has_grandFather_of_mother == 'Y' %}
+                                <p>{{ person.father_of_mother_share }} :سهم الارث پدربزرگ مادری </p>
+                            {% endif %}
+                            {% if person.has_grandMother_of_mother == 'Y' %}
+                                <p>{{ person.mother_of_mother_share }} :سهم الارث مادربزرگ مادری </p>
+                            {% endif %}
                             <a href="{% url 'person_update' person.id %}" class="btn btn-sm btn-danger" style="width: max-content;height: min-content">edit</a>
 
                         </div>

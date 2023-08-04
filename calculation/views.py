@@ -64,15 +64,15 @@ class PersonDeleteView(generic.DeleteView):
     success_url = reverse_lazy('listPage')
 
 
-class CalcView(generic.UpdateView):
-    model = Calculation
-    form_class = PersonView
-    model.father_share = 8
-
-    model.father_share = 7
-    Calculation.objects.model.father_share = 9
-    template_name = 'calculation/calc.html'
-    context_object_name = 'person'
+# class CalcView(generic.UpdateView):
+#     model = Calculation
+#     form_class = PersonView
+#     model.father_share = 8
+#
+#     model.father_share = 7
+#     Calculation.objects.model.father_share = 9
+#     template_name = 'calculation/calc.html'
+#     context_object_name = 'person'
 
 
 def updateView(request, pk):
@@ -154,15 +154,103 @@ def updateView(request, pk):
 
 
                 # ----------   second level   ----------#
-    if not has_child() and not has_father() and not has_mother() and person.singularity != 'sing':
+    if not has_child() and not has_father() and not has_mother() :
+                # ----------   grand parents   ----------#
+        remain = 1
+        if person.singularity != 'sing':
+            if person.gender == 'f':
+                person.hamsar_share = 1 / 2
+            else:
+                person.hamsar_share = 1 / 4
+            remain = 1 - person.hamsar_share
 
-        pass
+
+        if (person.has_grandFather_of_mother == 'Y' or person.has_grandMother_of_mother == 'Y') and \
+                (person.has_grandMother_of_father == 'Y' or person.has_grandFather_of_father == 'Y'):
+
+            if person.has_grandFather_of_mother == 'Y' and person.has_grandMother_of_mother == 'Y':
+                person.mother_of_mother_share = remain/3 / 2
+                person.father_of_mother_share = remain/3 / 2
+            elif person.has_grandFather_of_mother == 'Y':
+                person.father_of_mother_share = remain/3
+            elif person.has_grandMother_of_mother == 'Y':
+                person.mother_of_mother_share = remain/3
+
+            if person.has_grandMother_of_father == 'Y' and person.has_grandFather_of_father == 'Y':
+                person.mother_of_father_share = remain / 3 * 2 / 3 * 2
+                person.father_of_father_share = remain / 3 * 2 / 3
+            elif person.has_grandMother_of_father:
+                person.mother_of_father_share = remain/3*2
+            elif person.has_grandFather_of_father:
+                person.father_of_father_share = remain/3*2
+
+        elif (person.has_grandFather_of_mother == 'N' or person.has_grandMother_of_mother == 'N') and \
+                (person.has_grandMother_of_father == 'Y' or person.has_grandFather_of_father == 'Y'):
+
+            if person.has_grandMother_of_father == 'Y' and person.has_grandFather_of_father == 'Y':
+                person.mother_of_father_share = remain / 3 * 2
+                person.father_of_father_share = remain / 3
+            elif person.has_grandMother_of_father:
+                person.mother_of_father_share = remain
+            elif person.has_grandFather_of_father:
+                person.father_of_father_share = remain
+
+        elif (person.has_grandFather_of_mother == 'Y' or person.has_grandMother_of_mother == 'Y') and \
+                (person.has_grandMother_of_father == 'N' or person.has_grandFather_of_father == 'N'):
+            if person.has_grandFather_of_mother == 'Y' and person.has_grandMother_of_mother == 'Y':
+                person.mother_of_mother_share = remain / 2
+                person.father_of_mother_share = remain / 2
+            elif person.has_grandFather_of_mother == 'Y':
+                person.father_of_mother_share = remain
+            elif person.has_grandMother_of_mother == 'Y':
+                person.mother_of_mother_share = remain
 
 
+        else:
+                # ----------   siblings   ----------#
 
+            if has_sibling():
+                remain = from_mother_share(person, remain)
 
+                if person.number_of_common_sisters == 0 :
+                    person.brother_share = remain / person.number_of_common_brothers
+                elif person.number_of_common_brothers == 0 :
+                    person.sister_share = remain / person.number_of_common_sisters
+                elif person.number_of_common_sisters != 0 and person.number_of_common_brothers != 0 :
+                    remain = remain / (person.number_of_common_brothers * 2 + person.number_of_common_sisters)
+                    person.brother_share = remain * 2
+                    person.sister_share = remain
+
+            elif person.number_of_brothers_from_father + person.number_of_sister_from_father != 0:
+                remain = from_mother_share(person, remain)
+
+                remain = remain - (person.number_of_common_brothers * 2 + person.number_of_common_sisters)
+                person.brother_share = remain * 2
+                person.sister_share = remain
 
 
 
     person.save()
     return render(request, 'calculation/calc.html', context={'person': person})
+
+
+def from_mother_share(person, remain):
+    if person.number_of_brothers_from_mother + person.number_of_sisters_from_mother == 1:
+        if person.number_of_sisters_from_mother == 1:
+            person.sister_from_mother_share = remain / 6
+        elif person.number_of_brothers_from_mother == 1:
+            person.brother_from_mother_share = remain / 6
+        remain -= remain / 6
+    elif person.number_of_brothers_from_mother + person.number_of_sisters_from_mother > 1:
+        rest_share = remain / 3
+        if person.number_of_sisters_from_mother == 0:
+            person.brother_from_mother_share = rest_share / person.number_of_brothers_from_mother
+        elif person.number_of_brothers_from_mother == 0:
+            person.sister_from_mother_share = rest_share / person.number_of_sisters_from_mother
+        else:
+            rest_share = rest_share / (person.number_of_brothers_from_mother +
+                                       person.number_of_sisters_from_mother)
+            person.brother_from_mother_share = rest_share
+            person.sister_from_mother_share = rest_share
+        remain = remain / 3 * 2
+    return remain

@@ -34,11 +34,25 @@
                     <p class="mt-2"> {{ person.number_of_common_sisters }} :تعداد خواهران مشترک </p>
                     <p class="mt-2"> {{ person.number_of_brothers_from_father }} :تعداد برادران ابوی </p>
                     <p class="mt-2"> {{ person.number_of_sister_from_father }} :تعداد خواهران ابوی </p>
-                    <p class="mt-2"> {{ person.number_of_brothers_from_mother }} :تعداد برادران مادری </p>
-                    <p class="mt-2"> {{ person.number_of_sisters_from_mother }} :تعداد خواهران مادری </p>
-                    <a href="{% url 'calcPage' person.id %}" class="btn btn-sm btn-primary" style="width: max-content;height: min-content">محاسبه</a>
+                    <p class="mt-2"> {{ person.number_of_brothers_from_mother }} :تعداد برادران امی </p>
+                    <p class="mt-2"> {{ person.number_of_sisters_from_mother }} :تعداد خواهران امی </p>
+
+                    {% if person.has_grandFather_of_father == 'Y' %}
+                        <p>پدربزرگ پدری متوفی در قید حیات است</p>
+                    {% endif %}
+                    {% if person.has_grandMother_of_father == 'Y' %}
+                        <p>مادربزرگ پدری متوفی در قید حیات است</p>
+                    {% endif %}
+                    {% if person.has_grandFather_of_mother == 'Y' %}
+                        <p>پدربزرگ مادری متوفی در قید حیات است</p>
+                    {% endif %}
+                    {% if person.has_grandMother_of_mother == 'Y' %}
+                        <p>مادربزرگ مادری متوفی در قید حیات است</p>
+                    {% endif %}
 
 
+
+                    <a href="{% url 'calcPage' person.id %}" class="btn btn-sm btn-primary" style="width: max-content;height: min-content">محاسبه</a> <br>
 
 {#                    <p class="mt-2">has mother: {{ person.has_mother }}</p>#}
 {#                    <p class="mt-2">has father: {{ person.has_father }}</p>#}
