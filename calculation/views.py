@@ -51,6 +51,12 @@ class PersonDetailView(generic.DetailView):
     template_name = 'calculation/person_detail.html'
     context_object_name = 'person'
 
+class PersonShareView(generic.DetailView):
+    model = Calculation
+    template_name = 'calculation/Share.html'
+    context_object_name = 'person'
+
+
 
 class PersonUpdateView(generic.UpdateView):
     model = Calculation
@@ -77,6 +83,23 @@ class PersonDeleteView(generic.DeleteView):
 
 def updateView(request, pk):
     person = get_object_or_404(Calculation, pk=pk)
+
+    # restore all shares to zero to calculate again
+    person.hamsar_share = 0.0
+    person.father_share = 0.0
+    person.son_share = 0.0
+    person.daughter_share = 0.0
+    person.brother_share = 0.0
+    person.brother_from_mother_share = 0.0
+    person.brother_from_father_share = 0.0
+    person.sister_share = 0.0
+    person.sister_from_mother_share = 0.0
+    person.sister_from_father_share = 0.0
+    person.father_of_mother_share = 0.0
+    person.father_of_father_share = 0.0
+    person.mother_of_father_share = 0.0
+    person.mother_of_mother_share = 0.0
+
 
     def has_child():
         return False if person.number_of_sons + person.number_of_daughters == 0 else True
@@ -177,22 +200,22 @@ def updateView(request, pk):
                 person.mother_of_mother_share = remain/3
 
             if person.has_grandMother_of_father == 'Y' and person.has_grandFather_of_father == 'Y':
-                person.mother_of_father_share = remain / 3 * 2 / 3 * 2
-                person.father_of_father_share = remain / 3 * 2 / 3
-            elif person.has_grandMother_of_father:
+                person.father_of_father_share = remain / 3 * 2 / 3 * 2
+                person.mother_of_father_share = remain / 3 * 2 / 3
+            elif person.has_grandMother_of_father == 'Y':
                 person.mother_of_father_share = remain/3*2
-            elif person.has_grandFather_of_father:
+            elif person.has_grandFather_of_father == 'Y':
                 person.father_of_father_share = remain/3*2
 
         elif (person.has_grandFather_of_mother == 'N' or person.has_grandMother_of_mother == 'N') and \
                 (person.has_grandMother_of_father == 'Y' or person.has_grandFather_of_father == 'Y'):
 
             if person.has_grandMother_of_father == 'Y' and person.has_grandFather_of_father == 'Y':
-                person.mother_of_father_share = remain / 3 * 2
-                person.father_of_father_share = remain / 3
-            elif person.has_grandMother_of_father:
+                person.mother_of_father_share = remain / 3
+                person.father_of_father_share = remain / 3 * 2
+            elif person.has_grandMother_of_father == 'Y':
                 person.mother_of_father_share = remain
-            elif person.has_grandFather_of_father:
+            elif person.has_grandFather_of_father == 'Y':
                 person.father_of_father_share = remain
 
         elif (person.has_grandFather_of_mother == 'Y' or person.has_grandMother_of_mother == 'Y') and \
@@ -228,8 +251,7 @@ def updateView(request, pk):
                 person.brother_share = remain * 2
                 person.sister_share = remain
 
-
-
+    print(person.father_share + person.mother_share + person.hamsar_share + person.son_share*person.number_of_sons + person.daughter_share*person.number_of_daughters)
     person.save()
     return render(request, 'calculation/calc.html', context={'person': person})
 
