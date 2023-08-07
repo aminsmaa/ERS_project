@@ -36,9 +36,9 @@
                             {% if person.has_father == 'Y' %}
                                 <p>{{ person.father_share }} :سهم الارث پدر </p>
                             {% endif %}
-{#                            {% if person.has_mother == 'Y' %}#}
+                            {% if person.has_mother == 'Y' %}
                                 <p>{{ person.mother_share }} :سهم الارث مادر</p>
-{#                            {% endif %}#}
+                            {% endif %}
                             {% if person.singularity != 'sing' %}
                                 <p>{{ person.hamsar_share }} :سهم الارث همسر </p><br>
                             {% endif %}
@@ -101,7 +101,7 @@
                     <h5 class="card-header">About</h5>
                     <div class="card-body">
                         <p class="card-text">این سایت توسط امین ابطحی دانشجوی رشته کامپیوتر دانشگاه صنعتی شاهرود طراحی شده است</p>
-                        <a href="#"
+                        <a href="{% url 'moreinfo' %}"
                            class="btn btn-sm btn-danger">
                             More...
                         </a>

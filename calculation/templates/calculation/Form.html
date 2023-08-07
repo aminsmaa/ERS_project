@@ -4,16 +4,15 @@
 
 {% block content %}
 
-    this is the content
     <div class="container mt-4">
         <div class="row">
             <div class="col-9">
                 <div class="card shadow-sm my-3">
                     <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <h6 class="card-subtitle mb-2 text-muted small py-2">2 Sep 2021</h6>
+{#                        <h5 class="card-title">Card title</h5>#}
+{#                        <h6 class="card-subtitle mb-2 text-muted small py-2">2 Sep 2021</h6>#}
                         <p class="card-text py-3">
-                            وضعیت وراثت را مشخص کنید
+                            وضعیت وابستگان را مشخص کنید:
                         </p>
                         {#                    <div class="btn btn-sm btn-success">Read More</div>#}
                         <p class="card-text py-3">
@@ -80,7 +79,7 @@
                     <h5 class="card-header">About</h5>
                     <div class="card-body">
                         <p class="card-text">این سایت توسط امین ابطحی دانشجوی رشته کامپیوتر دانشگاه صنعتی شاهرود طراحی شده است</p>
-                        <a href="#"
+                        <a href="{% url 'moreinfo' %}"
                            class="btn btn-sm btn-danger">
                             More...
                         </a>

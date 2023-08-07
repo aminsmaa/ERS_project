@@ -18,6 +18,10 @@ def home_view(request):
     return render(request, 'calculation/Home.html', context)
 
 
+def more_info_view(request):
+    return render(request, 'calculation/moreInfo.html')
+
+
 # def form_view(request):
 #     context = {
 #         'page_name' : 'Form',
@@ -29,8 +33,8 @@ def home_view(request):
 
 class FormCreateView(generic.CreateView):
     form_class = PersonView
-    print(str(form_class.Meta.model.author))
-    print(form_class.Meta.model.objects.filter(id=64).values('author'))
+    # print(str(form_class.Meta.model.author))
+    # print(form_class.Meta.model.objects.filter(id=64).values('author'))
     template_name = 'calculation/Form.html'
 
 
